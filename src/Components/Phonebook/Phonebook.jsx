@@ -23,6 +23,7 @@ class Phonebook extends Component {
       this.setState({ contacts: [...this.state.contacts, data] });
     }
   };
+
   onDelForId = (evt) => {
     const list = this.state.contacts.filter(
       ({ id }) => id !== evt.currentTarget.id
@@ -48,15 +49,18 @@ class Phonebook extends Component {
   render() {
     const { filter } = this.state;
     const filtredContacts = this.onFilter();
+    const changeId = this.onDelForId;
+    const changeFilter = this.filterInputHandler;
+    const handleSubmit = this.formSubmitHandler;
     console.log(filtredContacts);
     return (
       <>
-        <FormRender onSubmit={this.formSubmitHandler} />
-        <Search onChange={this.filterInputHandler} />
+        <FormRender onSubmit={handleSubmit} />
+        <Search onChange={changeFilter} />
         <AddContacts
           contacts={filtredContacts}
           filter={filter}
-          changeId={this.onDelForId}
+          changeId={changeId}
         />
       </>
     );

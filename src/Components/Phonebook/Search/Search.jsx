@@ -7,6 +7,7 @@ class Search extends Component {
     this.props.onChange(value);
   };
   render() {
+    const search = this.handleSearch;
     return (
       <form>
         <h2> Your contacts </h2>
@@ -17,7 +18,7 @@ class Search extends Component {
             name="filter"
             title="Name search. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            onChange={this.handleSearch}
+            onChange={search}
             required
           />
         </label>

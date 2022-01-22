@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { nanoid } from 'nanoid';
-import AddContacts from "./AddContacts";
-import FormRender from "./FormRender";
-import Search from "./Search";
+import AddContacts from "./AddContacts/AddContacts";
+import FormRender from "./FormRender/FormRender";
+import Search from "./Search/Search";
 import PropTypes from "prop-types";
 
 class Phonebook extends Component {
@@ -35,7 +35,6 @@ class Phonebook extends Component {
   filterInputHandler = (input) => {
     let inputLC = input.toLowerCase();
     this.setState({ filter: inputLC });
-    console.log(inputLC);
   };
   onFilter = () => {
     const { filter, contacts } = this.state;
@@ -51,11 +50,10 @@ class Phonebook extends Component {
     const filtredContacts = this.onFilter();
     const changeId = this.onDelForId;
     const changeFilter = this.filterInputHandler;
-    const handleSubmit = this.formSubmitHandler;
-    console.log(filtredContacts);
+    const formSubmitHandler = this.formSubmitHandler;
     return (
       <>
-        <FormRender onSubmit={handleSubmit} />
+        <FormRender onSubmit={formSubmitHandler} />
         <Search onChange={changeFilter} />
         <AddContacts
           contacts={filtredContacts}

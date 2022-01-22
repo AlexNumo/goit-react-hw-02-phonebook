@@ -12,14 +12,17 @@ export default class FormRender extends Component {
     const { name, value } = event.currentTarget;
     this.setState({ [name]: value });
   };
+  
   handleSubmit = (event) => {
     event.preventDefault();
     this.props.onSubmit(this.state);
     this.formReset();
   };
+
   formReset = () => {
     this.setState({ name: "", number: "" });
   };
+  
   render() {
     const handleSubmit = this.handleSubmit;
     const handleChange = this.handleChange;

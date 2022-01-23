@@ -10,25 +10,31 @@ class Phonebook extends Component {
     contacts: [],
     filter: "",
   };
-  formSubmitHandler = (data) => {
-    const state = this.state.contacts
-      .map((contact) => {
-        return contact.name.includes(data.name);
-      })
-      .includes(true);
-    if (state) {
-      alert("такой контакт уже есть");
-    } else {
-      data.id = nanoid(5);
-      this.setState({ contacts: [...this.state.contacts, data] });
+formSubmitHandler = ({ name, number }) => {
+    const { contacts } = this.state;
+    const contact = {
+      id: nanoid(),
+      name,
+      number,
+    };
+
+    const normalizedName = contact.name.toLowerCase();
+
+    if (contacts.find(({ name }) => name.toLowerCase() === normalizedName)) {
+      alert(`${name} is already in contacts`);
+      return;
     }
+
+    this.setState(({ contacts }) => ({
+      contacts: [contact, ...contacts],
+    }));
   };
 
   onDelForId = (evt) => {
     const list = this.state.contacts.filter(
       ({ id }) => id !== evt.currentTarget.id
     );
-    alert(`Вы удалили контакт ${evt.currentTarget.name}`);
+    alert(`You have deleted the contact ${evt.currentTarget.name}`);
     this.setState({ contacts: list });
   };
 
@@ -44,17 +50,21 @@ class Phonebook extends Component {
       return contacts;
     }
   };
+    handleSearch = (event) => {
+      const { value } = event.currentTarget;
+    this.filterInputHandler(value);
+  };
 
   render() {
     const { filter } = this.state;
     const filtredContacts = this.onFilter();
     const changeId = this.onDelForId;
-    const changeFilter = this.filterInputHandler;
     const formSubmitHandler = this.formSubmitHandler;
+    const handleSearch = this.handleSearch;
     return (
       <>
         <FormRender onSubmit={formSubmitHandler} />
-        <Search onChange={changeFilter} />
+        <Search onChange={handleSearch} />
         <AddContacts
           contacts={filtredContacts}
           filter={filter}
